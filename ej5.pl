@@ -9,3 +9,8 @@ Codificar las reglas:
 
 pertenece(Elemento, [Elemento|_]).
 pertenece(Elemento, [_|Resto]) :- pertenece(Elemento, Resto).
+
+longitud([], 0).
+longitud([Inicio|Resto], Cantidad) :- longitud(Resto, CantidadRestante), Cantidad is CantidadRestante + 1.
+
+agregar(Elemento, Lista, ListaNueva) :- ListaNueva = [Elemento|Lista].
