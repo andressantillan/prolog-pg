@@ -16,9 +16,9 @@ longitud([Inicio|Resto], Cantidad) :- longitud(Resto, CantidadRestante), Cantida
 % agregar(Elemento, Lista, ListaNueva) :- ListaNueva = [Elemento|Lista].
 agregar(Elemento, Lista, [Elemento|Lista]).
 
-agregar_en_posicion(Elemento, Posicion, [], [Elemento]).  
+}
 
-agregar_en_posicion(Elemento, 1, Lista, [Elemento|Lista]).
+
 
 agregar_en_posicion(Elemento, Posicion, [_|Resto], ListaNueva) :-
     agregar_en_posicion(Elemento, PosicionNueva, Resto, ListaNueva),
