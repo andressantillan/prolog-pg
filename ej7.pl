@@ -28,4 +28,4 @@ sumar([Cabeza|Resto], Resultado) :-
     Resultado is Cabeza + ResultadoAux.
 
 sumar_pares([], 0).
-sumar_pares([Cabeza|Resto], Resultado) :-
+sumar_pares([Cabeza|Resto], Resultado).
