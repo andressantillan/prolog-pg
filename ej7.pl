@@ -20,12 +20,26 @@ longitud([], 0).
 longitud([Inicio|Resto], Cantidad) :- 
     longitud(Resto, CantidadRestante), Cantidad is CantidadRestante + 1.
 
-es_par(Numero) :- 0 is Numero mod 2.
-
 sumar([], 0).
 sumar([Cabeza|Resto], Resultado) :-
     sumar(Resto, ResultadoAux),
     Resultado is Cabeza + ResultadoAux.
 
-elemento_pos_par([], Elemento).
-elemento_pos_par([Cabeza|Resto], Elemento).
+/** Caso en que la lista esta vacia **/
+posiciones_pares([], []).
+
+/** Caso en que la lista solo tiene un elemento **/
+posiciones_pares([Elemento], []).
+
+/** Si la lista tiene mas de un elemento **/
+posiciones_pares([_,Cabeza|Cola], [Cabeza|Resto]) :-
+    posiciones_pares(Cola, Resto).
+
+suma_posiciones_pares(Lista, Total) :- 
+    posiciones_pares(Lista, ListaPares),
+    sumar(ListaPares, Total).
+
+generar_contrasenia([PrimerDigito|RestoDigitos], [R1, R2, R3]) :-
+    factorial(PrimerDigito, R1),
+    longitud([PrimerDigito|RestoDigitos], R2),
+    suma_posiciones_pares([PrimerDigito|RestoDigitos], R3).
