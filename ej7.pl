@@ -27,5 +27,5 @@ sumar([Cabeza|Resto], Resultado) :-
     sumar(Resto, ResultadoAux),
     Resultado is Cabeza + ResultadoAux.
 
-sumar_pares([], 0).
-sumar_pares([Cabeza|Resto], Resultado).
+elemento_pos_par([], Elemento).
+elemento_pos_par([Cabeza|Resto], Elemento).
