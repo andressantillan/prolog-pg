@@ -12,20 +12,23 @@ Lista = [10, 2, 2]**/
 
 billetes([1, 2, 5, 10, 20, 50, 100, 200, 500, 1000]).
 
-% billetes([1000,500,200,100,50,20,10,5,2,1]).
+sumar([], 0).
+sumar([Cabeza|Resto], Resultado) :-
+    sumar(Resto, ResultadoAux),
+    Resultado is Cabeza + ResultadoAux.
 
 combinacion(0, Billete, []).
-combinacion(Importe, Billete, []) :-
+combinacion(Importe, Billete, Lista) :-
     Importe < Billete,
-    !.
-
+    vuelto(Importe, Lista).
+    
 combinacion(Importe, Billete, [Billete|OtrosBilletes]) :-
-    billetes(B),
-    member(Billete, B),
     Importe >= Billete,
     NuevoImporte is Importe-Billete,
     combinacion(NuevoImporte, Billete, OtrosBilletes).
-    
 
-
-
+vuelto(Importe, Lista) :-
+    billetes(B),
+    member(X, B),
+    Importe > X,
+    combinacion(Importe, X, Lista).
