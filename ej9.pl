@@ -15,13 +15,11 @@ X = [10, 50]
 X = [60]
 2. Definir una solución que permita además identificar a cada cheque.
 **/
+combinacion([], Subtotal, MontoAcred, []).
+combinacion([C|RC], Subtotal, MontoAcred, [C|RAux]) :-
+    SubtotalAux is C + Subtotal,
+    SubtotalAux =< MontoAcred,
+    combinacion(RC, SubtotalAux, MontoAcred, RAux).
 
-combinacion(0, [], MontoAcred, Subtotal, 0).
-combinacion(ImporteCheque, [Cheque|RestoCheques], MontoAcred, Subtotal, [Cheque|RestoChequesAux]) :-
-    SubtotalAux is Cheque + ImporteCheque,
-    Subtotal =< MontoAcred,
-    combinacion(ImporteCheque, RestoCheques, MontoAcred, SubtotalAux, RestoChequesAux).
-
-acredPosibles([], 0, []).
-acredPosibles([Cheque|RestoCheques], MontoAcred, Lista) :-
-    
+acredPosibles(Cheques, MontoAcred, Lista) :-
+    combinacion(Cheques, 0, MontoAcred, Lista).    
