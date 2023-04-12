@@ -15,6 +15,9 @@ X = [10, 50]
 X = [60]
 2. Definir una solución que permita además identificar a cada cheque.
 **/
+
+% Caso alternativo en donde hay que intentar con sacar el primer cheque e ir intentando con los demas
+
 combinacion([], Subtotal, MontoAcred, []).
 combinacion([C|RC], Subtotal, MontoAcred, [C|RAux]) :-
     SubtotalAux is C + Subtotal,
