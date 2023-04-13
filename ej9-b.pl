@@ -16,13 +16,22 @@ X = [60]
 2. Definir una solución que permita además identificar a cada cheque.
 **/
 
-acredPosibles([], 0, []).
+identificar([], []).
+identificar([Cheque|Resto], [cheque(Id, Cheque)|RestoAux]) :-
+    random(1, 999999, Id),
+    identificar(Resto, RestoAux).
 
-acredPosibles([Cheque|Resto], MontoAcred, [Cheque|RestoAux]) :-
-    MontoAcred >= Cheque,
-    MontoAux is MontoAcred - Cheque,
-    acredPosibles(Resto, MontoAux, RestoAux).
 
-acredPosibles([_|Resto], MontoAux, Lista) :-
-    acredPosibles(Resto, MontoAux, Lista).
+acredPosibles(Cheques, MontoAcred, Lista) :-
+    identificar(Cheques, ChequesId),
+    acredPosiblesAux(ChequesId, MontoAcred, Lista).
+
+acredPosiblesAux([], 0, []).
+acredPosiblesAux([cheque(Id, Monto)|Resto], MontoAcred, [cheque(Id, Monto)|RestoAux]) :-
+    MontoAcred >= Monto,
+    MontoAux is MontoAcred - Monto,
+    acredPosiblesAux(Resto, MontoAux, RestoAux).
+
+acredPosiblesAux([_|Resto], MontoAux, Lista) :-
+    acredPosiblesAux(Resto, MontoAux, Lista).
     
