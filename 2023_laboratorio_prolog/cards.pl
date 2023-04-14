@@ -61,3 +61,14 @@ value(card(k,_), 10).
 value(card(j,_), 10).
 value(card(q,_), 10).
 value(card(N,_), N).
+
+/* hand(Hand, Value)*/
+hand([], 0).
+hand([card(Number, Suit)|RC], Value) :-
+    hand(RC, ValueAux),
+    value(card(Number, Suit), X),
+    Value is X + ValueAux.
+
+twentyone(Hand) :-
+    hand(Hand, X),
+    21 is X.
