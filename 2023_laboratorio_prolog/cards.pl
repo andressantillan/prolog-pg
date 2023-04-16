@@ -56,11 +56,16 @@ card(k,d).
 
 
 value(card(a,_), 1).
-value(card(a,_), 10).
+value(card(a,_), 11).
 value(card(k,_), 10).
 value(card(j,_), 10).
 value(card(q,_), 10).
-value(card(N,_), N).
+value(card(N,_), N) :- integer(N), between(1, 10, N).
+
+longitud([], 0).
+longitud([_|Resto], Cantidad) :- 
+    longitud(Resto, CantidadRestante), 
+    Cantidad is CantidadRestante + 1.
 
 /* hand(Hand, Value)*/
 hand([], 0).
@@ -70,5 +75,38 @@ hand([card(Number, Suit)|RC], Value) :-
     Value is X + ValueAux.
 
 twentyone(Hand) :-
-    hand(Hand, X),
-    21 is X.
+    hand(Hand, V),
+    21 is V.
+
+over(Hand) :-
+    hand(Hand, V),
+    V > 21.
+
+blackjack(Hand) :-
+    longitud(Hand, Cantidad),
+    Cantidad = 2,
+    hand(Hand, V),
+    V = 21.
+
+classic_dealer_seventeen(Hand) :-
+    hand(Hand, V),
+    V >= 17, 
+    print('Me planto.').
+
+classic_dealer_sixteen(Hand) :-
+    hand(Hand, V),
+    V =< 16,
+    print('Me paro de manos, sigo jugando.').
+
+
+% Implementar la regla soft_seventeen
+soft_dealer(Hand) :-
+    classic_dealer_seventeen(Hand),
+    member(card(a, _), Hand),
+    print('Me planto.').
+
+hard_dealer(Hand) :-
+    classic_dealer_seventeen(Hand),
+    print('Me paro de manos, sigo jugando').
+
+
