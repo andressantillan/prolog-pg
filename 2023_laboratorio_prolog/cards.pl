@@ -98,15 +98,20 @@ classic_dealer_sixteen(Hand) :-
     V =< 16,
     print('Me paro de manos, sigo jugando.').
 
-
-% Implementar la regla soft_seventeen
-soft_dealer(Hand) :-
-    classic_dealer_seventeen(Hand),
+% El crupier tiene una mano de 17, con un As valiendo 11.
+soft_seventeen(Hand) :-
+    hand(Hand, V),
     member(card(a, _), Hand),
+    V = 17.
+
+soft_dealer(Hand) :-
+    soft_seventeen(Hand),
     print('Me planto.').
 
 hard_dealer(Hand) :-
-    classic_dealer_seventeen(Hand),
+    soft_seventeen(Hand),
     print('Me paro de manos, sigo jugando').
 
-
+play(Hand, Crupier, Cards) :-
+    hand(Hand, VH),
+    hand(Crupier, VC).
