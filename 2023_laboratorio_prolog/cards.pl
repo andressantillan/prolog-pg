@@ -62,6 +62,21 @@ value(card(j,_), 10).
 value(card(q,_), 10).
 value(card(N,_), N) :- integer(N), between(1, 10, N).
 
+% Card values for Uston SS System
+uston_system(2, 2).
+uston_system(3, 2).
+uston_system(4, 2).
+uston_system(6, 2).
+uston_system(5, 3).
+uston_system(7, 1).
+uston_system(8, 0).
+uston_system(9, -1).
+uston_system(10, -2).
+uston_system(a, -2).
+uston_system(j, -2).
+uston_system(q, -2).
+uston_system(k, -2).
+
 longitud([], 0).
 longitud([_|Resto], Cantidad) :- 
     longitud(Resto, CantidadRestante), 
@@ -111,6 +126,14 @@ soft_dealer(Hand) :-
 hard_dealer(Hand) :-
     soft_seventeen(Hand),
     print('Me paro de manos, sigo jugando').
+
+uston_count([], 0).
+uston_count([card(N, _)|RC], Count) :-
+    uston_count(RC, CountAux),
+    uston_system(N, Value),
+    Count is CountAux + Value.
+
+% 2,4,5,A,K,7 = 4
 
 play(Hand, Crupier, Cards) :-
     hand(Hand, VH),
