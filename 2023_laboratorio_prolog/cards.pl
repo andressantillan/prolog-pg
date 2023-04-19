@@ -135,6 +135,20 @@ uston_count([card(N, _)|RC], Count) :-
 
 % 2,4,5,A,K,7 = 4
 
+
+% Si el conteo es mayor a 0, quiere decir que hay menos cartas altas en juego
+% Lo cual es favorable para el jugador.
+player_strategy(Cards) :-
+    uston_count(Cards, Count),
+    Count > 0,
+    print('Hit.').
+    
+% Si el conteo es menor a 0, es probable que la ventaja
+% Sea para el crupier
+player_strategy(Cards) :-
+    print('Stand.').
+
 play(Hand, Crupier, Cards) :-
     hand(Hand, VH),
-    hand(Crupier, VC).
+    hand(Crupier, VC),
+    player_strategy(Cards).
