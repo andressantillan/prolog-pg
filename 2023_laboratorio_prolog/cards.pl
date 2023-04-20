@@ -56,7 +56,6 @@ card(j,d).
 card(q,d).
 card(k,d).
 
-
 value(card(a,_), 1).
 value(card(a,_), 11).
 value(card(k,_), 10).
@@ -127,7 +126,10 @@ soft_dealer(Hand) :-
 
 hard_dealer(Hand) :-
     soft_seventeen(Hand),
-    print('Me paro de manos, sigo jugando').
+    print('Me paro de manos, sigo jugando'), !.
+
+hard_total_strategy(Value, [card(N, _)|_]) :-
+    hard_total(Value, N).
 
 uston_count([], 0).
 uston_count([card(N, _)|RC], Count) :-
@@ -135,26 +137,28 @@ uston_count([card(N, _)|RC], Count) :-
     uston_system(N, Value),
     Count is CountAux + Value.
 
-% 2,4,5,A,K,7 = 4
-
-
 % Si el conteo es mayor a 0, quiere decir que hay menos cartas altas en juego
 % Lo cual es favorable para el jugador.
-player_strategy(Cards) :-
+player_strategy(_, _, Cards) :-
     uston_count(Cards, Count),
     Count > 0,
     print('Hit.').
     
 % Si el conteo es menor a 0, es probable que la ventaja
-% Sea para el crupier
-player_strategy(Cards) :-
-    print('Stand.').
+% sea para el crupier.
+% Pero se comprueba por una segunda estrategia.
+% Se comprueba teniendo en cuenta el valor de la mano del jugador y una carta
+% del dealer.
+player_strategy(Hand, Crupier, _) :-
+    hand(Hand, V),
+    hard_total_strategy(V, Crupier),
+    print('Hit.').
 
-hard_total_strategy(Value, [card(N, _)|_]) :-
-    hard_total(Value, N).
+% Si falla la estrategia por hard totals
+% El jugador se planta (stand).
+player_strategy(_,_,_) :- 
+    print('Stand'), false.
 
+% Si se cumple, opta por strategia uston ss
 play(Hand, Crupier, Cards) :-
-    hand(Hand, VH),
-    hand(Crupier, VC),
-    hard_total_strategy(VH, Crupier),
-    player_strategy(Cards).
+    player_strategy(Hand, Crupier, Cards).

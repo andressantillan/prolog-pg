@@ -1,6 +1,5 @@
-
 % Hard total strategy
-% hard_total(HandaValue, DealerCard)
+% hard_total(HandValue, DealerCard)
 % Si se cumple el predicado, signifca un hit por aprte del jugador.
 hard_total(8, 2).
 hard_total(8, 3).
