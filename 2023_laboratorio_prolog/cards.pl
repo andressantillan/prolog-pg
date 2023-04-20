@@ -1,3 +1,5 @@
+:- [hard_totals].
+
 card(a,c).
 card(2,c).
 card(3,c).
@@ -148,7 +150,11 @@ player_strategy(Cards) :-
 player_strategy(Cards) :-
     print('Stand.').
 
+hard_total_strategy(Value, [card(N, _)|_]) :-
+    hard_total(Value, N).
+
 play(Hand, Crupier, Cards) :-
     hand(Hand, VH),
     hand(Crupier, VC),
+    hard_total_strategy(VH, Crupier),
     player_strategy(Cards).
