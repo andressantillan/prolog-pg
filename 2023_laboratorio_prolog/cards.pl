@@ -131,7 +131,8 @@ hard_dealer(Hand) :-
 hard_total_strategy(Value, [card(N, _)|_]) :-
     hard_total(Value, N).
 
-uston_count([], 0).
+% El conteo comienza en -2, ya que hay un solo mazo en la mesa
+uston_count([], -2).
 uston_count([card(N, _)|RC], Count) :-
     uston_count(RC, CountAux),
     uston_system(N, Value),
